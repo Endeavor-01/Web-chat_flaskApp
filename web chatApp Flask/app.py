@@ -5,7 +5,7 @@ from flask_socketio import SocketIO,send
 from pymongo import MongoClient
 
 app = Flask(__name__)
-app.config['SECRET'] = "secret!123"
+app.config['SECRET'] = "add yours"
 Socketio = SocketIO(app , cors_allowed_orgins = "*")
 
 client = MongoClient('mongodb://localhost:27017/')
