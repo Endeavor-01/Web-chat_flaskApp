@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+    <title>Python Chat App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
+    <style>
+        body {
+            font-family: 'Jersey 10', sans-serif;
+            font-size: 25px;
+            text-align: center;
+            background-color: black;
+            color: greenyellow;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        h1 {
+            font-size: 40px;
+            margin-top: 20px;
+        }
+        #messages {
+            margin: 0 auto;
+            width: 60%;
+            text-align: left;
+            min-height: 300px;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+        #input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 200px;
+            height: 30px;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        button#sendbtn {
+            background-color: greenyellow;
+            font-size: 20px;
+            height: 36px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Python Chat App</h1>
+    <div id="messages">
+        {% for message in chat_history %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    <div id="input-container">
+        <input type="text" id="username" placeholder="username" required>
+        <input type="text" id="message" placeholder="message" required>
+        <button id="sendbtn">Send</button>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var socket = io.connect("http://localhost:5000")
+            socket.on('connect', function(){
+                socket.send("user connected");
+            });
+
+            socket.on('message', function(data){
+                $('#messages').append($('<p>').text(data));
+                $('#messages').scrollTop($('#messages')[0].scrollHeight);
+            });
+
+            $('#sendbtn').on('click', function(){
+                socket.send($('#username').val() + ':' + $('#message').val());
+                $('#message').val('');
+            });
+
+        })
+    </script>
+</body>
+</html>
