@@ -1,4 +1,3 @@
-Apologies for the oversight. Let's include the clone command and running command in the README file along with the installation command:
 
 ---
 
@@ -8,8 +7,8 @@ Apologies for the oversight. Let's include the clone command and running command
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/Endeavor-01/Web-chat_flaskApp
+   cd Web-chat_flaskApp
    ```
 
 2. Install dependencies:
